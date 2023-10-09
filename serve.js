@@ -3,13 +3,10 @@ const app = express();
 const mongoose = require("mongoose");
 const Note = require("./Note");
 const bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-
-const { ReturnDocument } = require("mongodb");
-const { where } = require("./Note");
+const {ReturnDocument} = require("mongodb");
+const {where} = require("./Note");
 mongoose
   .connect(
     "mongodb+srv://tanujsaini778899:gAXkxelgLnENN5Lm@cluster0.wvpe7e8.mongodb.net/notesdb"
@@ -23,7 +20,16 @@ mongoose
       res.json(notes);
     });
 
-    app.post("/notes/add", async function (req, res) {
+ 
+    app.post ("/notes/delete", async function(req, res) {
+        await Note.deleteone({ id: req.body.id})
+        const response = { message: "New Note deteted!" };
+        res.json(response); //to print on web
+  });
+    
+    
+    
+            app.post("/notes/add", async function (req, res) {
       //res.json(req.body);
       await Note.deleteOne({
         id: req.body.id,
